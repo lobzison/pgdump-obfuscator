@@ -31,13 +31,6 @@ pgdump-obfuscator -c auth_user:email:email -c auth_user:password:bytes -c addres
 ```
 
 
-Docker
-====
-
-```
-docker run -v /path/to/destination:/data ostrovok-team/pgdump-obfuscator zcat /data/dump.gz | pgdump-obfuscator | gzip > /data/dump.obfuscated.gz
-```
-
 Who
 ===
 
