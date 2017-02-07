@@ -1,11 +1,14 @@
 FROM alpine:edge
 MAINTAINER George Kutsurua <g.kutsurua@gmail.com>
 
+RUN apk add --no-cache go musl-dev
+
 COPY . /pgdump-obfuscator
 
-RUN apk --update-cache add go &&\
-    cd /pgdump-obfuscator &&\
+RUN cd /pgdump-obfuscator &&\
     go build . &&\
     mv /pgdump-obfuscator/pgdump-obfuscator /usr/sbin/pgdump-obfuscator &&\
-    apk del go --force && \
+    apk del go musl-dev --force && \
     rm -rf /pgdump-obfuscator /var/cache/apk/*
+
+ENTRYPOINT ["/usr/sbin/pgdump-obfuscator"]
