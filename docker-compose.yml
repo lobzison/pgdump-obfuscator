@@ -1,0 +1,7 @@
+version: '3'
+services:
+  builder:
+    build: .
+    volumes:
+      - ./bin:/host_bin
+    command: cp /usr/sbin/pgdump-obfuscator /host_bin/
