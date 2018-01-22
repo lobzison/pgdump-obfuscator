@@ -88,7 +88,7 @@ func processDataLine(config *Configuration, target *Target, columns []string, li
 		// TODO: try map
 		columnIndex := find(columns, to.T.Column)
 		if columnIndex == -1 {
-			return errors.New("Target column not found in earlier header. Wrong table?")
+			return errors.New(fmt.Sprintf("Target column `%s.%s` not found in earlier header. Wrong table? (target=%s)", to.T.Table, to.T.Column, target.Table))
 		}
 		value = fields[columnIndex]
 		if len(value) == 0 {
