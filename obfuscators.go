@@ -137,6 +137,7 @@ func scrambleOneUniqueEmail(s []byte) []byte {
 	copy(s[len(mailbox):], []byte("@"))
 	copy(s[len(mailbox)+DomainLen+1:], DomainPostfix)
 	// So final len(mailbox) may be shorter than whole allocated string.
+	total = len(mailbox) + 1 + DomainLen + len(DomainPostfix)
 	return s[:total]
 }
 
