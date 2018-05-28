@@ -152,6 +152,17 @@ func TestScrambleEmail(t *testing.T) {
 		"+QWUPnIS@example.com")
 }
 
+func TestScrambleUniqueEmail(t *testing.T) {
+	Salt = []byte("test-salt")
+	assertScramble(t, ScrambleUniqueEmail, "solar.sultan@emerginspaceagency.com",
+		"lxtTUsvMGzRo@uoievjjkleb8gh7a2ayyie.example")
+	assertScramble(t, ScrambleUniqueEmail, "{foo@bar.com,test@example.com}",
+		"{DK3@1u7t913.example,LDVR@1o4wthaadn4.example}")
+	assertScramble(t, ScrambleUniqueEmail, "унеун@mail.ru", "gfpFV@2ps2nuk.example")
+	assertScramble(t, ScrambleUniqueEmail, "multiple@emails.com,but.not@array.in",
+		"+QWUPnIS@7x8f15oletv2wrbhq8mcriros04.example")
+}
+
 func TestScrambleInet(t *testing.T) {
 	Salt = []byte("test-salt")
 	assertScramble(t, ScrambleInet, "142.34.56.78", "56.42.246.77")

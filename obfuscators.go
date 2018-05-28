@@ -127,18 +127,20 @@ func scrambleOneUniqueEmail(s []byte) []byte {
 	mailbox := Salt
 	if atIndex != -1 {
 		mailbox = s[:atIndex]
+	} else {
+		mailbox = append([]byte(nil), Salt...)
 	}
-	total := len(mailbox) + 1 + DomainLen + len(DomainPostfix)
-	s = make([]byte, total)
-	copy(s, mailbox)
-	// ScrambleBytes is in-place, but may return string shorter than input.
-	mailbox = ScrambleBytes(s[:len(mailbox)])
-	ScrambleSafeBytes(s[len(mailbox)+1 : len(mailbox)+1+DomainLen])
-	copy(s[len(mailbox):], []byte("@"))
-	copy(s[len(mailbox)+DomainLen+1:], DomainPostfix)
-	// So final len(mailbox) may be shorter than whole allocated string.
-	total = len(mailbox) + 1 + DomainLen + len(DomainPostfix)
-	return s[:total]
+	domain := s[atIndex+1:]
+
+	scrambledMailbox := ScrambleBytes(mailbox)
+	scrambledDomain := ScrambleSafeBytes(domain)
+	total := len(scrambledMailbox) + 1 + len(scrambledDomain) + len(DomainPostfix)
+	s2 := make([]byte, total)
+	copy(s2, scrambledMailbox)
+	copy(s2[len(scrambledMailbox):], []byte("@"))
+	copy(s2[len(scrambledMailbox)+1:], scrambledDomain)
+	copy(s2[len(scrambledMailbox)+1+len(scrambledDomain):], DomainPostfix)
+	return s2
 }
 
 // Supports array of emails in format {email1,email2}
