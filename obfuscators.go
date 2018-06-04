@@ -18,8 +18,12 @@ const DomainLen = 10
 
 func GenScrambleBytes(maxLength uint) func([]byte) []byte {
 	return func(s []byte) []byte {
-		// TODO: pad or extend s to maxLength
-		return ScrambleBytes(s)[:maxLength]
+		scrambled := ScrambleBytes(s)
+		if maxLength > uint(len(scrambled)) {
+			return scrambled
+		} else {
+			return scrambled[:maxLength]
+		}
 	}
 }
 
