@@ -158,7 +158,7 @@ func process(config *Configuration, input *bufio.Reader, output io.Writer) error
 				if len(tokens) < 4 {
 					return errors.New("process: parse error: too few tokens in COPY statement: " + string(line))
 				}
-				target.Table = tokens[1]
+				target.Table = strings.TrimPrefix(tokens[1], "public.")
 				columns = tokens[2 : len(tokens)-2]
 			}
 		case parseStateCopy:
