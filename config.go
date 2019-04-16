@@ -130,6 +130,6 @@ var Config *Configuration = &Configuration{
 		TargetedObfuscation{
 			Target{Table: "policies", Column: "normalized_company"},
 			ScrambleBytes,
-		}
+		},
 	},
 }
