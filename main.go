@@ -29,6 +29,7 @@ func (self *configFlags) Set(value string) error {
 
 func (self *configFlags) ToConfiguration() (*Configuration, error) {
 	configuration := &Configuration{}
+	
 	for _, v := range *self {
 		splittedValues := strings.Split(v, ":")
 		if len(splittedValues) == 3 {
@@ -45,7 +46,7 @@ func (self *configFlags) ToConfiguration() (*Configuration, error) {
 				},
 			)
 		} else {
-			return nil, errors.New(fmt.Sprintf("Inccorrect data in configuration flags!\n"))
+			return nil, errors.New(fmt.Sprintf("Incorrect data in configuration flags!\n"))
 		}
 	}
 	return configuration, nil
@@ -253,5 +254,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	process(configuration, input, output)
+	if len(configs) == 0 {
+		process(Config, input, output)
+	} else {
+		process(configuration, input, output)
+	}
 }
