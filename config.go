@@ -46,10 +46,6 @@ var Config *Configuration = &Configuration{
 
 		
 		TargetedObfuscation{
-			Target{Table: "customer_details", Column: "date_of_birth"},
-			ScrambleDigits,
-		},
-		TargetedObfuscation{
 			Target{Table: "customer_details", Column: "fico_score"},
 			ScrambleDigits,
 		},
@@ -67,7 +63,7 @@ var Config *Configuration = &Configuration{
 		},
 		TargetedObfuscation{
 			Target{Table: "customer_details", Column: "short_ssn"},
-			ScrambleBytes,
+			ScrambleDigits,
 		},
 
 		
@@ -82,10 +78,6 @@ var Config *Configuration = &Configuration{
 		TargetedObfuscation{
 			Target{Table: "loans", Column: "number"},
 			ScrambleBytes,
-		},
-		TargetedObfuscation{
-			Target{Table: "loans", Column: "closing_date"},
-			ScrambleDigits,
 		},
 		
 		
@@ -106,10 +98,6 @@ var Config *Configuration = &Configuration{
 			ScrambleDigits,
 		},
 		TargetedObfuscation{
-			Target{Table: "coborrowers", Column: "date_of_birth"},
-			ScrambleDigits,
-		},
-		TargetedObfuscation{
 			Target{Table: "coborrowers", Column: "ssn"},
 			ScrambleDigits,
 		},
@@ -118,10 +106,6 @@ var Config *Configuration = &Configuration{
 		TargetedObfuscation{
 			Target{Table: "policies", Column: "company"},
 			ScrambleBytes,
-		},
-		TargetedObfuscation{
-			Target{Table: "policies", Column: "expiration_date"},
-			ScrambleDigits,
 		},
 		TargetedObfuscation{
 			Target{Table: "policies", Column: "number"},
