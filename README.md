@@ -18,7 +18,6 @@ Example command to export dump with proper format with pg_dump:
 Configuration
 ====
 
-```
 Example:
 
 ```
