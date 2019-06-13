@@ -115,5 +115,24 @@ var Config *Configuration = &Configuration{
 			Target{Table: "policies", Column: "normalized_company"},
 			ScrambleBytes,
 		},
+		
+		TargetedObfuscation{
+			Target{Table: "quotes", Column: "online_bind_url"},
+			ScrambleBytes,
+		},
+		
+		TargetedObfuscation{
+			Target{Table: "api_clients", Column: "secret"},
+			ScrambleBytes,
+		},
+		
+		TargetedObfuscation{
+			Target{Table: "blacklist_contacts", Column: "email"},
+			ScrambleBytes,
+		},
+		TargetedObfuscation{
+			Target{Table: "blacklist_contacts", Column: "phone"},
+			ScrambleDigits,
+		},
 	},
 }
