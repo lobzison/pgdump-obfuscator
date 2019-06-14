@@ -14,6 +14,7 @@ import (
 var Salt []byte
 
 const emailDomain = "@example.com"
+const bindUrl = "https://example.com?quote_gid="
 const DomainLen = 10
 
 func GenScrambleBytes(maxLength uint) func([]byte) []byte {
@@ -126,6 +127,30 @@ func scrambleOneEmail(s []byte) []byte {
 	return s[:len(mailbox)+len(emailDomain)]
 }
 
+func ScrambleBindUrls(s []byte) []byte {
+    paramName := []byte("gid=")
+
+	if len(s) == 0 {
+		return s
+	}
+
+	if bytes.LastIndex(s, paramName) == -1 {
+	    return s
+	}
+
+	arr := bytes.Split(s, paramName)
+    gid := arr[1]
+
+    // ScrambleBytes is in-place, but may return string shorter than input.
+    scrambledGid := ScrambleBytes(gid)
+
+	s = make([]byte, len(bindUrl)+len(scrambledGid))
+	copy(s, bindUrl)
+	copy(s[len(bindUrl):], scrambledGid)
+
+	return s
+}
+
 func scrambleOneUniqueEmail(s []byte) []byte {
 	atIndex := bytes.IndexRune(s, '@')
 	mailbox := Salt
@@ -223,6 +248,8 @@ func GetScrambleByName(value string) (func(s []byte) []byte, error) {
 		return ScrambleEmail, nil
 	case "uemail":
 		return ScrambleUniqueEmail, nil
+	case "bindurl":
+	    return ScrambleBindUrls, nil
 	case "inet":
 		return ScrambleInet, nil
 	}
