@@ -118,7 +118,7 @@ var Config *Configuration = &Configuration{
 		
 		TargetedObfuscation{
 			Target{Table: "quotes", Column: "online_bind_url"},
-			ScrambleBytes,
+			ScrambleBindUrls,
 		},
 		
 		TargetedObfuscation{
@@ -128,7 +128,7 @@ var Config *Configuration = &Configuration{
 		
 		TargetedObfuscation{
 			Target{Table: "blacklist_contacts", Column: "email"},
-			ScrambleBytes,
+			ScrambleEmail,
 		},
 		TargetedObfuscation{
 			Target{Table: "blacklist_contacts", Column: "phone"},
