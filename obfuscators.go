@@ -112,6 +112,12 @@ func ScrambleDigits(s []byte) []byte {
 	return s
 }
 
+func ScrambleIBAN(s []byte) []byte {
+	//return constant for now
+	b := []byte("DE75512108001245126199")
+	return b
+}
+
 func scrambleOneEmail(s []byte) []byte {
 	atIndex := bytes.IndexRune(s, '@')
 	mailbox := Salt
@@ -128,21 +134,21 @@ func scrambleOneEmail(s []byte) []byte {
 }
 
 func ScrambleBindUrls(s []byte) []byte {
-    paramName := []byte("gid=")
+	paramName := []byte("gid=")
 
 	if len(s) == 0 {
 		return s
 	}
 
 	if bytes.LastIndex(s, paramName) == -1 {
-	    return s
+		return s
 	}
 
 	arr := bytes.Split(s, paramName)
-    gid := arr[1]
+	gid := arr[1]
 
-    // ScrambleBytes is in-place, but may return string shorter than input.
-    scrambledGid := ScrambleBytes(gid)
+	// ScrambleBytes is in-place, but may return string shorter than input.
+	scrambledGid := ScrambleBytes(gid)
 
 	s = make([]byte, len(bindUrl)+len(scrambledGid))
 	copy(s, bindUrl)
@@ -249,9 +255,11 @@ func GetScrambleByName(value string) (func(s []byte) []byte, error) {
 	case "uemail":
 		return ScrambleUniqueEmail, nil
 	case "bindurl":
-	    return ScrambleBindUrls, nil
+		return ScrambleBindUrls, nil
 	case "inet":
 		return ScrambleInet, nil
+	case "iban":
+		return ScrambleIBAN, nil
 	}
 	return nil, errors.New(fmt.Sprintf("%s is not registered scramble function", value))
 }

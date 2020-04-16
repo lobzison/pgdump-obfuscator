@@ -164,18 +164,26 @@ func TestScrambleUniqueEmail(t *testing.T) {
 }
 
 func TestScrambleBindUrl(t *testing.T) {
-    Salt = []byte("test-salt")
-    assertScramble(t, ScrambleBindUrls,
-        "http://bind.com?carrier=safeco&some_gid=2495330c-5d-afdb1f0845f2e9f943f7f6",
-        "https://example.com?quote_gid=DJv1RQElgiRH79Gu5oOBHwml1kUglJIJqL")
-    assertScramble(t, ScrambleBindUrls, "", "")
-    assertScramble(t, ScrambleBindUrls, "https://example.com", "https://example.com")
+	Salt = []byte("test-salt")
+	assertScramble(t, ScrambleBindUrls,
+		"http://bind.com?carrier=safeco&some_gid=2495330c-5d-afdb1f0845f2e9f943f7f6",
+		"https://example.com?quote_gid=DJv1RQElgiRH79Gu5oOBHwml1kUglJIJqL")
+	assertScramble(t, ScrambleBindUrls, "", "")
+	assertScramble(t, ScrambleBindUrls, "https://example.com", "https://example.com")
 }
 
 func TestScrambleInet(t *testing.T) {
 	Salt = []byte("test-salt")
 	assertScramble(t, ScrambleInet, "142.34.56.78", "56.42.246.77")
 	assertScramble(t, ScrambleInet, "97.34.0.18", "e4ed:d550:209d:9f10:f690:953:5d4f:c0d6")
+}
+
+func TestScrambleIBAN(t *testing.T) {
+	assertScramble(t, ScrambleIBAN,
+		"DE1234567890",
+		"DE75512108001245126199")
+	assertScramble(t, ScrambleIBAN, "", "DE75512108001245126199")
+	assertScramble(t, ScrambleIBAN, "qwd8989ajn", "DE75512108001245126199")
 }
 
 func BenchmarkProcessShort(b *testing.B) {
